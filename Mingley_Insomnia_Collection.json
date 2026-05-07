@@ -1,0 +1,583 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-01-01",
+  "__export_source": "insomnia.desktop.app",
+  "resources": [
+    {
+      "_id": "wrk_mingley",
+      "_type": "workspace",
+      "name": "Mingley Dating API",
+      "description": "Complete API collection for Mingley"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_mingley",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:7001/v1",
+        "token": "",
+        "user_id": ""
+      }
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\ud83d\udd10 Auth"
+    },
+    {
+      "_id": "req_register",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "1. Register",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/register",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"newuser@test.com\",\n  \"phone\": null,\n  \"password\": \"Test@123456\",\n  \"confirmPassword\": \"Test@123456\",\n  \"fullName\": \"Test User\",\n  \"gender\": \"male\",\n  \"dateOfBirth\": \"1995-01-01T00:00:00Z\"\n}"
+      }
+    },
+    {
+      "_id": "req_verify_otp",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "2. Verify OTP",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/verify-otp",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"userId\": \"PASTE_USER_ID_FROM_REGISTER\",\n  \"otp\": \"PASTE_OTP_FROM_REGISTER_RESPONSE\",\n  \"purpose\": \"registration\"\n}"
+      }
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "3. Login (Demo - Rahul)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"rahul@demo.com\",\n  \"password\": \"Admin@123456\",\n  \"twoFactorCode\": null,\n  \"deviceToken\": null,\n  \"devicePlatform\": \"android\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_priya",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "4. Login (Demo - Priya)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"priya@demo.com\",\n  \"password\": \"Admin@123456\",\n  \"twoFactorCode\": null,\n  \"deviceToken\": null,\n  \"devicePlatform\": \"android\"\n}"
+      }
+    },
+    {
+      "_id": "req_refresh",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "5. Refresh Token",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/refresh-token",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"PASTE_REFRESH_TOKEN\"\n}"
+      }
+    },
+    {
+      "_id": "req_logout",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "6. Logout",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/logout",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{}"
+      }
+    },
+    {
+      "_id": "req_forgot",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "7. Forgot Password",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/forgot-password",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"identifier\": \"rahul@demo.com\"\n}"
+      }
+    },
+    {
+      "_id": "fld_users",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\ud83d\udc64 Users"
+    },
+    {
+      "_id": "req_get_me",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Get My Profile",
+      "method": "GET",
+      "url": "{{ _.base_url }}/users/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_update_profile",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Update Profile",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/users/me",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullName\": \"Rahul Mehta Updated\",\n  \"bio\": \"Music lover \\ud83c\\udfb5 | Updated bio\",\n  \"gender\": \"male\",\n  \"dateOfBirth\": \"1995-07-22T00:00:00Z\",\n  \"avatar\": \"https://randomuser.me/api/portraits/men/32.jpg\"\n}"
+      }
+    },
+    {
+      "_id": "req_update_interests",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Update Interests",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/users/me/interests",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"interests\": [\n    \"Music\",\n    \"Travel\",\n    \"Photography\",\n    \"Cooking\"\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_update_preferences",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Update Preferences (Filters)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/users/me/preferences",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"interestedIn\": \"girls\",\n  \"minAge\": 20,\n  \"maxAge\": 32,\n  \"maxDistance\": 50,\n  \"relationshipType\": \"both\",\n  \"nearbyOnly\": false,\n  \"onlineOnly\": false,\n  \"verifiedOnly\": false,\n  \"location\": \"Delhi, India\"\n}"
+      }
+    },
+    {
+      "_id": "req_update_location",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Update Location",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/users/me/location",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"lat\": 28.614,\n  \"lng\": 77.209,\n  \"city\": \"Delhi\",\n  \"country\": \"India\"\n}"
+      }
+    },
+    {
+      "_id": "fld_discover",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\ud83d\udc9d Discover"
+    },
+    {
+      "_id": "req_feed",
+      "_type": "request",
+      "parentId": "fld_discover",
+      "name": "Get Discovery Feed",
+      "method": "GET",
+      "url": "{{ _.base_url }}/discover?page=1&limit=20",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_swipe_like",
+      "_type": "request",
+      "parentId": "fld_discover",
+      "name": "Swipe Like",
+      "method": "POST",
+      "url": "{{ _.base_url }}/discover/swipe",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"targetId\": \"PASTE_TARGET_USER_ID\",\n  \"action\": \"like\"\n}"
+      }
+    },
+    {
+      "_id": "req_swipe_dislike",
+      "_type": "request",
+      "parentId": "fld_discover",
+      "name": "Swipe Dislike",
+      "method": "POST",
+      "url": "{{ _.base_url }}/discover/swipe",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"targetId\": \"PASTE_TARGET_USER_ID\",\n  \"action\": \"dislike\"\n}"
+      }
+    },
+    {
+      "_id": "req_matches",
+      "_type": "request",
+      "parentId": "fld_discover",
+      "name": "Get Matches",
+      "method": "GET",
+      "url": "{{ _.base_url }}/matches?page=1&limit=20",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "fld_chats",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\ud83d\udcac Chats"
+    },
+    {
+      "_id": "req_get_chats",
+      "_type": "request",
+      "parentId": "fld_chats",
+      "name": "Get All Chats",
+      "method": "GET",
+      "url": "{{ _.base_url }}/chats",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_get_messages",
+      "_type": "request",
+      "parentId": "fld_chats",
+      "name": "Get Messages",
+      "method": "GET",
+      "url": "{{ _.base_url }}/chats/PASTE_CHAT_ID/messages?page=1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_send_message",
+      "_type": "request",
+      "parentId": "fld_chats",
+      "name": "Send Message",
+      "method": "POST",
+      "url": "{{ _.base_url }}/chats/PASTE_CHAT_ID/messages",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"text\": \"Hello! How are you? \\ud83d\\ude0a\",\n  \"type\": \"text\"\n}"
+      }
+    },
+    {
+      "_id": "req_mark_read",
+      "_type": "request",
+      "parentId": "fld_chats",
+      "name": "Mark Chat Read",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/chats/PASTE_CHAT_ID/read",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{}"
+      }
+    },
+    {
+      "_id": "req_quota",
+      "_type": "request",
+      "parentId": "fld_chats",
+      "name": "Get Message Quota",
+      "method": "GET",
+      "url": "{{ _.base_url }}/chats/PASTE_CHAT_ID/quota",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "fld_wallet",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\ud83d\udcb0 Wallet"
+    },
+    {
+      "_id": "req_balance",
+      "_type": "request",
+      "parentId": "fld_wallet",
+      "name": "Get Balance",
+      "method": "GET",
+      "url": "{{ _.base_url }}/wallet/balance",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_packages",
+      "_type": "request",
+      "parentId": "fld_wallet",
+      "name": "Get Coin Packages",
+      "method": "GET",
+      "url": "{{ _.base_url }}/wallet/packages",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_transactions",
+      "_type": "request",
+      "parentId": "fld_wallet",
+      "name": "Get Transactions",
+      "method": "GET",
+      "url": "{{ _.base_url }}/wallet/transactions?type=all",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_deposit",
+      "_type": "request",
+      "parentId": "fld_wallet",
+      "name": "Submit Deposit (UTR)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/wallet/deposit",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"utrId\": \"UTR123456789\",\n  \"screenshotUrl\": null,\n  \"requestedCoins\": 300\n}"
+      }
+    },
+    {
+      "_id": "req_withdraw",
+      "_type": "request",
+      "parentId": "fld_wallet",
+      "name": "Withdraw (Female Only)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/wallet/withdraw",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"coins\": 100,\n  \"bankOrUpi\": \"priya@paytm\"\n}"
+      }
+    },
+    {
+      "_id": "fld_subs",
+      "_type": "request_group",
+      "parentId": "wrk_mingley",
+      "name": "\u2b50 Subscriptions"
+    },
+    {
+      "_id": "req_plans",
+      "_type": "request",
+      "parentId": "fld_subs",
+      "name": "Get Plans",
+      "method": "GET",
+      "url": "{{ _.base_url }}/subscriptions/plans",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_sub_status",
+      "_type": "request",
+      "parentId": "fld_subs",
+      "name": "Get My Subscription Status",
+      "method": "GET",
+      "url": "{{ _.base_url }}/subscriptions/status",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_subscribe",
+      "_type": "request",
+      "parentId": "fld_subs",
+      "name": "Subscribe to Gold Plan",
+      "method": "POST",
+      "url": "{{ _.base_url }}/subscriptions/subscribe",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"planId\": \"b0000001-0000-0000-0000-000000000002\",\n  \"autoRenew\": true\n}"
+      }
+    }
+  ]
+}
